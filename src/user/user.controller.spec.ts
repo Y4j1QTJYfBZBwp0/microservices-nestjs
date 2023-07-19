@@ -14,9 +14,9 @@ describe('UserController', () => {
     userController = app.get<UserController>(UserController);
   });
 
-  describe('User domain', () => {
-    it('should return "Hello World! from user controller"', () => {
-      expect(userController.getHello()).toBe('Hello World - User!');
+  describe('findAll', () => {
+    it('should return an array of users', async () => {
+      expect(userController.findAll()).toStrictEqual([]);
     });
   });
 });
