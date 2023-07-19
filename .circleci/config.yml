@@ -12,6 +12,8 @@ jobs:
           command: npm run test
       - run:
           command: npm run test:e2e
+      - run:
+          command: npm run lint
 
 workflows:
   build-and-test:
