@@ -12,7 +12,15 @@ jobs:
           command: npm run test
       - run:
           command: npm run test:e2e
+  lint:
+    steps:
+      - run:
+          command: npm run lint
+
 workflows:
   build-and-test:
     jobs:
       - build-and-test
+      - lint:
+          requires:
+            - build-and-test
