@@ -1,5 +1,7 @@
 # Microservices with Nestjs - Training.
 
+[![CircleCI](https://circleci.com/gh/Y4j1QTJYfBZBwp0/microservices-nestjs.svg?style=svg)](https://circleci.com/gh/Y4j1QTJYfBZBwp0/microservices-nestjs)
+
 ## Description
 
 Repository containing my code generated during training "Nest.js: criando uma API Restful"
