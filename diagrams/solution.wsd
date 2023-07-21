@@ -1,0 +1,14 @@
+@startuml
+
+actor Client as client
+participant api
+database Postgres as postgres
+
+client -> api: GET
+activate api
+api->postgres: SELECT
+postgres->api: SELECT
+api-->client: JSON
+deactivate api
+
+@enduml
