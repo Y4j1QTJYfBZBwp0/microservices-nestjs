@@ -4,10 +4,12 @@ import { LoggerMiddleware } from './middleware/logger.middleware';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostgressConfigService } from './config/postgres.config.service';
 import { ConfigModule } from '@nestjs/config';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
     UserModule,
+    HealthModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
