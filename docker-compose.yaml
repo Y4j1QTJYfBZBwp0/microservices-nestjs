@@ -1,23 +1,45 @@
 version: '3.5'
 
 services:
-  postgres:
+  db-development:
     image: postgres:latest
     environment:
+      POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-      PGDATA: /data/postgres
+      PGDATA: /data/postgres      
     volumes:
-      - postgres:/data/postgres
+      - db-development:/data/postgres
+      - ./db/base/01-create_tables.sql:/docker-entrypoint-initdb.d/01-create_tables.sql
+      - ./db/base/02-load-data.sql:/docker-entrypoint-initdb.d/02-load-data.sql
     ports:
-      - "5432:5432"
+      - ${DB_PORT}:5432
     networks:
-      - postgres
+      - db-development
+    restart: unless-stopped
+  db-test:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: ${DB_TESTNAME}
+      POSTGRES_USER: ${DB_TESTUSERNAME}
+      POSTGRES_PASSWORD: ${DB_TESTPASSWORD}
+      PGDATA: /data/postgres      
+    volumes:
+      - db-test:/data/postgres
+      - ./db/base/01-create_tables.sql:/docker-entrypoint-initdb.d/01-create_tables.sql
+      - ./db/test/02-load-data-test.sql:/docker-entrypoint-initdb.d/02-load-data-test.sql
+    ports:
+      - ${DB_TESTPORT}:5432
+    networks:
+      - db-test
     restart: unless-stopped
 
 networks:
-  postgres:
+  db-development:
+    driver: bridge
+  db-test:
     driver: bridge
 
 volumes:
-    postgres:
+    db-development:
+    db-test:
