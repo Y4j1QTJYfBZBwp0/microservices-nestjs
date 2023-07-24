@@ -20,8 +20,6 @@ import { UserService } from './user/user.service';
       inject: [PostgressConfigService],
     }),
   ],
-  controllers: [UserController],
-  providers: [UserService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
