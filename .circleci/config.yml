@@ -29,9 +29,18 @@ jobs:
       - run:
           command: npm run test:cov
           name: Run Code Coverage
+  dependency_audit:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - node/install-packages
+      - run:
+          command: npm audit --json
+          name: Run Dependency Audit
 
 workflows:
-  build-and-test:
+  ci:
     jobs:
       - lint
       - unit-test:
@@ -40,3 +49,4 @@ workflows:
       - code-coverage:
           requires:
             - unit-test
+      - dependency_audit
