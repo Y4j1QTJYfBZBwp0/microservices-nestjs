@@ -17,6 +17,11 @@ describe('UserController', () => {
           provide: getRepositoryToken(UserEntity),
           useValue: {
             find: jest.fn().mockResolvedValue([]),
+            findOne: jest
+              .fn()
+              .mockResolvedValue(
+                new UserDTO('1', 'user1', 'user1@domain.com', 'hard_password'),
+              ),
             save: jest
               .fn()
               .mockResolvedValue(
@@ -67,6 +72,11 @@ describe('UserController', () => {
       describe('Delete a user', () => {
         it('should delete a user', async () => {
           expect(userController.delete('1')).resolves.toBeUndefined();
+        });
+      });
+      describe('Find a user', () => {
+        it('should return a user', async () => {
+          expect(userController.findById('1')).resolves.toBeInstanceOf(UserDTO);
         });
       });
       describe('List all users', () => {
