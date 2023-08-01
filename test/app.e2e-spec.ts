@@ -3,23 +3,37 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
 import {
-  DockerComposeEnvironment,
-  StartedDockerComposeEnvironment,
+  PostgreSqlContainer,
+  StartedPostgreSqlContainer,
 } from 'testcontainers';
+import { FileToCopy } from 'testcontainers/dist/src/docker/types';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
-
-  let environment: StartedDockerComposeEnvironment;
+  let pg: StartedPostgreSqlContainer;
 
   beforeAll(async () => {
-    const composeFilePath = '';
-    const composeFile = 'docker-compose.yaml';
+    const createDataBaseFile: FileToCopy = {
+      source: `${__dirname}/../db/base/01-create_tables.sql`,
+      target: 'docker-entrypoint-initdb.d/01-create_tables.sql',
+    };
 
-    environment = await new DockerComposeEnvironment(
-      composeFilePath,
-      composeFile,
-    ).up();
+    const loadData: FileToCopy = {
+      source: `${__dirname}/../db/base/02-load-data.sql`,
+      target: 'docker-entrypoint-initdb.d/02-load-data.sql',
+    };
+
+    pg = await new PostgreSqlContainer('postgres:latest')
+      .withExposedPorts(5432)
+      .withDatabase('development')
+      .withUsername('root')
+      .withPassword('123456')
+      .withCopyFilesToContainer([createDataBaseFile, loadData])
+      .start();
+
+    process.env.DB_PORT = pg.getMappedPort(5432).toString();
+
+    console.log('DB_PORT', process.env.DB_PORT);
 
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
@@ -31,7 +45,7 @@ describe('AppController (e2e)', () => {
   });
 
   afterAll(async () => {
-    await environment.down();
+    await pg.stop();
     await app.close();
   });
 

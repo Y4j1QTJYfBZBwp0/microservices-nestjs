@@ -12,6 +12,10 @@ Repository containing my code generated during training "Nest.js: criando uma AP
 * GitHub Copilot
 * GitHub Copilot Labs
 * Nestjs
+* Jest
+* TestContainers
+* SuperTest
+* TypeORM
 
 ## Installation
 
