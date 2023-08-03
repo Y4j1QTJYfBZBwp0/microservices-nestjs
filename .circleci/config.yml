@@ -47,8 +47,8 @@ jobs:
           command: npm install
           name: Install dependencies
       - run:
-          command: npm run test
-          name: Run tests
+          command: npm run test:e2e
+          name: Run e2e tests
 
 workflows:
   ci:
