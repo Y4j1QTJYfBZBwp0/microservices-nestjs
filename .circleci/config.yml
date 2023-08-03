@@ -53,7 +53,7 @@ workflows:
   ci:
     jobs:
       - dependency_audit      
-      - lint
+      - lint:
           requires:
             - dependency_audit      
       - unit-test:
