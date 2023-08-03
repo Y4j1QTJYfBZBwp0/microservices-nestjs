@@ -5,8 +5,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostgressConfigService } from './config/postgres.config.service';
 import { ConfigModule } from '@nestjs/config';
 import { HealthModule } from './health/health.module';
-import { UserController } from './user/user.controller';
-import { UserService } from './user/user.service';
 
 @Module({
   imports: [
