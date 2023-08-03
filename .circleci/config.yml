@@ -1,7 +1,6 @@
 version: 2.1
 orbs:
   node: circleci/node@5.1.0
-  testcontainers-cloud-orb: atomicjar/testcontainers-cloud-orb@0.1.0
 jobs:
   lint:
     executor:
