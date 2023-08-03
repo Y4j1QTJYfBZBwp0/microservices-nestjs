@@ -44,9 +44,9 @@ jobs:
     steps:
       - checkout
       - node/install-packages
-      run:
-        command: npm run test
-        name: Run E2E Tests
+      - run:
+          command: npm run test
+          name: Run E2E Tests
 
 workflows:
   ci:
