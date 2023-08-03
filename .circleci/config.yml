@@ -40,7 +40,7 @@ jobs:
           name: Run Dependency Audit
   e2e:
     machine:
-      image: ubuntu-2004:202010-01
+      image: ubuntu-2204:2023.07.2
     steps:
       - checkout      
       - run:
