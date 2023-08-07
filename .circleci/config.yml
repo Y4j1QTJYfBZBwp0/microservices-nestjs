@@ -38,15 +38,28 @@ jobs:
       - run:
           command: npm audit --json
           name: Run Dependency Audit
+  e2e:
+    machine:
+      image: ubuntu-2204:2023.07.2
+    steps:
+      - checkout      
+      - run:
+          command: npm install
+          name: Install dependencies
+      - run:
+          command: npm run test:e2e
+          name: Run e2e tests
 
 workflows:
   ci:
     jobs:
-      - lint
+      - dependency_audit      
+      - lint:
+          requires:
+            - dependency_audit      
       - unit-test:
           requires:
             - lint
       - code-coverage:
           requires:
             - unit-test
-      - dependency_audit
