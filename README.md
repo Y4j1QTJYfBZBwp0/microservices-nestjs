@@ -8,11 +8,13 @@ Repository containing my code generated during training "Nest.js: criando uma AP
 
 ## Tech Stack
 
-* VSCode
-* GitHub Copilot
-* GitHub Copilot Labs
-* Nestjs
-* Testcontainers
+
+
+* [VSCode](https://code.visualstudio.com/)
+* [GitHub Copilot](https://github.com/features/copilot)
+* [GitHub Copilot Labs](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-labs)
+* [NestJS](https://nestjs.com/)
+* [Testcontainers](https://testcontainers.com/)
 
 ## Installation
 
