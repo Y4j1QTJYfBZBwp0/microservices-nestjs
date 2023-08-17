@@ -4,9 +4,12 @@ import { UserService } from './user.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { UserEntity } from './user.entity';
 import { UserDTO } from './dto/user.dto';
+import { ThrottlerGuard } from '@nestjs/throttler';
+import { CanActivate } from '@nestjs/common';
 
 describe('UserController', () => {
   let userController: UserController;
+  const mock_ThrottlerGuard: CanActivate = { canActivate: jest.fn(() => true) };
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
@@ -36,7 +39,10 @@ describe('UserController', () => {
           },
         },
       ],
-    }).compile();
+    })
+      .overrideGuard(ThrottlerGuard)
+      .useValue(mock_ThrottlerGuard)
+      .compile();
 
     userController = app.get<UserController>(UserController);
   });
