@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostgressConfigService } from './config/postgres.config.service';
 import { ConfigModule } from '@nestjs/config';
 import { HealthModule } from './health/health.module';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
@@ -16,6 +17,10 @@ import { HealthModule } from './health/health.module';
     TypeOrmModule.forRootAsync({
       useClass: PostgressConfigService,
       inject: [PostgressConfigService],
+    }),
+    ThrottlerModule.forRoot({
+      ttl: 60,
+      limit: 10,
     }),
   ],
 })
