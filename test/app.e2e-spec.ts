@@ -68,7 +68,7 @@ describe('AppController (e2e)', () => {
     return request(app.getHttpServer()).get('/users').expect(200);
   });
 
-  it('Get All Users', (done) => {
+  it('Get a Rate limit Error after a number of requests', (done) => {
     async.series(
       [
         function (callback) {
