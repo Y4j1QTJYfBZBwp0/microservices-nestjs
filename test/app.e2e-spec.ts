@@ -8,6 +8,8 @@ import {
 } from 'testcontainers';
 import { FileToCopy } from 'testcontainers/dist/src/docker/types';
 
+import * as async from 'async';
+
 describe('AppController (e2e)', () => {
   let app: INestApplication;
   let pg: StartedPostgreSqlContainer;
@@ -64,6 +66,44 @@ describe('AppController (e2e)', () => {
 
   it('Get All Users', () => {
     return request(app.getHttpServer()).get('/users').expect(200);
+  });
+
+  it('Get a Rate limit Error after a number of requests', (done) => {
+    async.series(
+      [
+        function (callback) {
+          request(app.getHttpServer()).get('/users').expect(200, callback);
+        },
+        function (callback) {
+          request(app.getHttpServer()).get('/users').expect(200, callback);
+        },
+        function (callback) {
+          request(app.getHttpServer()).get('/users').expect(200, callback);
+        },
+        function (callback) {
+          request(app.getHttpServer()).get('/users').expect(200, callback);
+        },
+        function (callback) {
+          request(app.getHttpServer()).get('/users').expect(200, callback);
+        },
+        function (callback) {
+          request(app.getHttpServer()).get('/users').expect(200, callback);
+        },
+        function (callback) {
+          request(app.getHttpServer()).get('/users').expect(200, callback);
+        },
+        function (callback) {
+          request(app.getHttpServer()).get('/users').expect(200, callback);
+        },
+        function (callback) {
+          request(app.getHttpServer()).get('/users').expect(200, callback);
+        },
+        function (callback) {
+          request(app.getHttpServer()).get('/users').expect(429, callback);
+        },
+      ],
+      done,
+    );
   });
 
   it('Get User By ID', () => {
